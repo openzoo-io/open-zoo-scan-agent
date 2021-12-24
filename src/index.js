@@ -11,6 +11,7 @@ const startBlock = {
   999: 16444451,
   888: 16444451,
 };
+const apiEndPoint = process.env.API_ENDPOINT;
 
 const resyncBlock = 10;
 
@@ -67,7 +68,6 @@ async function scan(dbBlock) {
 const track721Address = async () => {
   const func = async () => {
     try {
-      console.log('Total collections', trackedSC.length);
       let response = await axios.get(`${apiEndPoint}getTrackable721Contracts`)
       if (response) {
         let data = response.data;
@@ -80,12 +80,14 @@ const track721Address = async () => {
           });
         }
       }
-      setTimeout(async () => {
-        await func()
-      }, 1000 * 10)
-    } catch (error) {}
+      console.log('Total collections', trackedSC.length);
+    } catch (error) {
+      console.log(error);
+    }
+    setTimeout(func, 1000 * 10);
   }
   await func()
+
 }
 
 async function processEvent(event) {
@@ -97,7 +99,6 @@ async function processEvent(event) {
 
 async function callApi(endpoint, data) {
   console.log('callApi', endpoint, data);
-  const apiEndPoint = process.env.API_ENDPOINT;
   let ret = await axios({
     method: 'post',
     url: apiEndPoint + endpoint,

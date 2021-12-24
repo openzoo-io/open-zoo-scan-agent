@@ -91,6 +91,7 @@ const track721Address = async () => {
 }
 
 async function processEvent(event) {
+  console.log('processEvent', event.topics[0]);
   if (eventMap[event.topics[0]]) {
     console.log('found event', eventMap[event.topics[0]].name);
     await eventMap[event.topics[0]].fn(event);

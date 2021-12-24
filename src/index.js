@@ -105,7 +105,7 @@ async function callApi(endpoint, data) {
     url: apiEndPoint + endpoint,
     data,
   });
-  console.log('callApi ret', ret);
+  // console.log('callApi ret', ret);
 }
 
 const eventMap = {

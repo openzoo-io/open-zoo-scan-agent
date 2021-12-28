@@ -45,10 +45,16 @@ async function scan(dbBlock) {
             let receipt = await web3.eth.getTransactionReceipt(tx.hash);
             if (receipt.logs.length > 0) { // tx has logs
               console.log('tx logs', receipt.logs.length);
-              let arr = receipt.logs.map((v) => {
-                return processEvent(v);
-              });
-              await Promise.all(arr);
+             // let arr = receipt.logs.map((v) => {
+              //  return processEvent(v);
+             // });
+
+              for (let v in receipt.logs)
+              {
+                await processEvent(v);
+              }
+
+             // await Promise.all(arr);
             }
           }
         }
@@ -117,13 +123,8 @@ const eventMap = {
         let data = { address: _event.address, to: '0x' + _event.topics[2].slice(-40), tokenID: parseInt(_event.topics[3])};
         //await sleep(3000);
         //console.log('Slept done @'+ new Date().toISOString())
-
-        setTimeout(async () => {
-          await callApi('handle721Transfer', data);
-          console.log('done @'+ new Date().toISOString());
-        },3000)
-        
-        
+        await callApi('handle721Transfer', data);
+        await sleep(200);
       }
     }
   }

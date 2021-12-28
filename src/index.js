@@ -115,8 +115,8 @@ const eventMap = {
     fn: async (_event) => {
       if (trackedSC.includes(_event.address.toLowerCase())) {
         let data = { address: _event.address, to: '0x' + _event.topics[2].slice(-40), tokenID: parseInt(_event.topics[3])};
-        await sleep(3000);
-        console.log('Slept done @'+ new Date().toISOString())
+       // await sleep(3000);
+       // console.log('Slept done @'+ new Date().toISOString())
         await callApi('handle721Transfer', data);
         
       }

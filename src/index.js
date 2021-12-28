@@ -120,6 +120,7 @@ const eventMap = {
 
         setTimeout(async () => {
           await callApi('handle721Transfer', data);
+          console.log('done @'+ new Date().toISOString());
         },3000)
         
         

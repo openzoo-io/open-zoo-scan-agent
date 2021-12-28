@@ -95,7 +95,7 @@ async function processEvent(event) {
   if (eventMap[event.topics[0]]) {
     console.log('found event', eventMap[event.topics[0]].name);
     await eventMap[event.topics[0]].fn(event);
-    await sleep(500);
+    
   }
 }
 
@@ -116,7 +116,7 @@ const eventMap = {
       if (trackedSC.includes(_event.address.toLowerCase())) {
         let data = { address: _event.address, to: '0x' + _event.topics[2].slice(-40), tokenID: parseInt(_event.topics[3])};
         await callApi('handle721Transfer', data);
-        
+        await sleep(3000);
       }
     }
   }

@@ -46,7 +46,6 @@ async function scan(dbBlock) {
             if (receipt.logs.length > 0) { // tx has logs
               console.log('tx logs', receipt.logs.length);
               let arr = receipt.logs.map((v) => {
-                await sleep(500);
                 return processEvent(v);
               });
               await Promise.all(arr);
@@ -96,6 +95,7 @@ async function processEvent(event) {
   if (eventMap[event.topics[0]]) {
     console.log('found event', eventMap[event.topics[0]].name);
     await eventMap[event.topics[0]].fn(event);
+    await sleep(500);
   }
 }
 

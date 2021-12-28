@@ -48,11 +48,11 @@ async function scan(dbBlock) {
              // let arr = receipt.logs.map((v) => {
               //  return processEvent(v);
              // });
-             console.log(receipt.logs);
-              for (let v in receipt.logs)
+             //console.log(receipt.logs);
+              for (let key in receipt.logs)
               {
-                console.log(v);
-                await processEvent(v);
+                
+                await processEvent(receipt.logs[key]);
               }
 
              // await Promise.all(arr);

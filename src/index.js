@@ -51,6 +51,7 @@ async function scan(dbBlock) {
 
               for (let v in receipt.logs)
               {
+                console.log(v);
                 await processEvent(v);
               }
 

@@ -115,7 +115,7 @@ const eventMap = {
       if (trackedSC.includes(_event.address.toLowerCase())) {
         let data = { address: _event.address, to: '0x' + _event.topics[2].slice(-40), tokenID: parseInt(_event.topics[3])};
         await callApi('handle721Transfer', data);
-        await sleep(200);
+        await sleep(1000);
       }
     }
   }

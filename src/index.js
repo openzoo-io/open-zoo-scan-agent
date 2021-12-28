@@ -46,6 +46,7 @@ async function scan(dbBlock) {
             if (receipt.logs.length > 0) { // tx has logs
               console.log('tx logs', receipt.logs.length);
               let arr = receipt.logs.map((v) => {
+                await sleep(500);
                 return processEvent(v);
               });
               await Promise.all(arr);
@@ -115,7 +116,7 @@ const eventMap = {
       if (trackedSC.includes(_event.address.toLowerCase())) {
         let data = { address: _event.address, to: '0x' + _event.topics[2].slice(-40), tokenID: parseInt(_event.topics[3])};
         await callApi('handle721Transfer', data);
-        await sleep(1000);
+        
       }
     }
   }

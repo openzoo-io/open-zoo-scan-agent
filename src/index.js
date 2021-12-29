@@ -41,9 +41,7 @@ async function scan(dbBlock) {
       if (block.transactions.length > 0) {
         for (let i=0; i<block.transactions.length; i++) {
           let tx = await web3.eth.getTransaction(block.transactions[i]);
-          console.log('tx.to', tx.to);
-          console.log('tracked sc', trackedSC, tx.to && trackedSC.includes(tx.to.toLowerCase()));
-          if (tx.input.length > 0 && tx.to && trackedSC.includes(tx.to.toLowerCase())) { // sc call
+          if (tx.input.length > 0) { // sc call
             let receipt = await web3.eth.getTransactionReceipt(tx.hash);
             if (receipt.logs.length > 0) { // tx has logs
               console.log('tx logs', receipt.logs.length);

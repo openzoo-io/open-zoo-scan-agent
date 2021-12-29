@@ -41,7 +41,7 @@ async function scan(dbBlock) {
       if (block.transactions.length > 0) {
         for (let i=0; i<block.transactions.length; i++) {
           let tx = await web3.eth.getTransaction(block.transactions[i]);
-          if (tx.input.length > 0) { // sc call
+          if (tx.input.length > 0 && trackedSC.includes(tx.to.toLowerCase())) { // sc call
             let receipt = await web3.eth.getTransactionReceipt(tx.hash);
             if (receipt.logs.length > 0) { // tx has logs
               console.log('tx logs', receipt.logs.length);
@@ -49,9 +49,7 @@ async function scan(dbBlock) {
               //  return processEvent(v);
              // });
              //console.log(receipt.logs);
-              for (let key in receipt.logs)
-              {
-                
+              for (let key in receipt.logs) {
                 await processEvent(receipt.logs[key]);
               }
 
@@ -102,7 +100,6 @@ async function processEvent(event) {
   if (eventMap[event.topics[0]]) {
     console.log('found event', eventMap[event.topics[0]].name);
     await eventMap[event.topics[0]].fn(event);
-    
   }
 }
 

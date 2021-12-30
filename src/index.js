@@ -9,7 +9,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_URL));
 const chainId = process.env.CHAIN_ID;
 const startBlock = {
   999: 16444451,
-  888: 16444451,
+  888: 18390968,
 };
 const apiEndPoint = process.env.API_ENDPOINT;
 

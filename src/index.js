@@ -104,13 +104,23 @@ async function processEvent(event) {
 }
 
 async function callApi(endpoint, data) {
-  console.log('callApi', endpoint, data);
-  let ret = await axios({
-    method: 'post',
-    url: apiEndPoint + endpoint,
-    data,
-  });
-  // console.log('callApi ret', ret);
+  let times = 0;
+  while(times < 100) {
+    try {
+      let ret = await axios({
+        method: 'post',
+        url: apiEndPoint + endpoint,
+        data,
+      });
+      return ret;
+    } catch (err) {
+      console.error('[callAPI error] failed for: ', {data});
+      console.error(err.message);
+      console.log(`retry after ${5*times} seconds.`)
+      await sleep(5000*times);
+      times++;
+    }
+  }
 }
 
 const eventMap = {

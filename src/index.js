@@ -26,15 +26,17 @@ async function scan(dbBlock) {
   while(true) {
     try {
       let block = await web3.eth.getBlock(current);
-      console.log('got block', block ? block.number : 'empty');
       if (!block) {
         await sleep(5000);
         continue;
       }
 
+      console.log('got block', block ? block.number : 'empty');
+
       if (hash && block && block.parentHash !== hash) {
         current = current - resyncBlock;
         hash = null;
+        console.log(`detected reorg, resync last ${resyncBlock} blocks`);
         continue;
       }
       console.log('tx count', block.transactions.length);
